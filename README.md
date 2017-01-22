@@ -1,5 +1,5 @@
-#lwlegopt package(R)
-##Some tools may be  used  for the data processing of cancer genomes
+#R packages
+#Some tools may be  used  for the data processing of cancer genomes
 This tool is used to plot 3D-lego image for mutation spectrum.
 #Instructions
 #1
