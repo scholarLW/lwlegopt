@@ -4,11 +4,15 @@ die"perl $0 <mutect> <samtools> <fasta> <96_mutation_types> <workdir> <title>\n"
 my($mut,$samtools,$fa,$mutation_types,$workdir,$title)=@ARGV;
 open IN,"$mut" or die "$!";
 open OUT,">$workdir/spectrum.txt";
+my $coo=0;
 while(<IN>){
   chomp;
   next if $_=~/^#/;
   if($_=~/^contig/){
-     print OUT "trinucleotides\tsubstitution\t$_\n";
+     $coo=$coo+1;
+     if($coo<2){
+         print OUT "trinucleotides\tsubstitution\t$_\n";
+     }
      next;
   }
   my($chr,$pos,$ref1,$obs1)=(split '\t',$_)[0,1,3,4];
