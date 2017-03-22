@@ -90,8 +90,13 @@ while(<IN>){
   $ksam{$sam}=1;
 }
 close IN;
-foreach my $tr(keys %type){
-   foreach my $tt(keys %{$type{$tr}}){
+my @stype=("C>A","C>G","C>T");
+my @stype1=("T>A","T>C","T>G");
+my @sstype=('A_A','A_C','A_G','A_T','C_A','C_C','C_G','C_T','G_A','G_C','G_G','G_T','T_A','T_C','T_G','T_T');
+my @sstype1=('ANA','ANC','ANG','ANT','CNA','CNC','CNG','CNT','GNA','GNC','GNG','GNT','TNA','TNC','TNG','TNT');
+foreach my $tr(@stype){
+   foreach my $tt(@sstype){
+      $tt=~s/_/C/;
       print TY "$tr\n";
       print SB "$tt\n";
       my $str='';
@@ -105,6 +110,24 @@ foreach my $tr(keys %type){
       chop $str;
       print OR1 "$str\n";
       print OR2 "$tt\t$tr\t$str\n";
+   }
+}
+foreach my $tr1(@stype1){
+   foreach my $tt1(@sstype1){
+      $tt1=~s/N/T/;
+      print TY "$tr1\n";
+      print SB "$tt1\n";
+      my $str='';
+      foreach my $samm(keys %ksam){
+         if(exists $data{$tr1}{$tt1}{$samm}){
+             $str.=$data{$tr1}{$tt1}{$samm}."\t";
+         }else{
+             $str.="0"."\t";
+         } 
+      }
+      chop $str;
+      print OR1 "$str\n";
+      print OR2 "$tt1\t$tr1\t$str\n";
    }
 }
 foreach my $samm(keys %ksam){
