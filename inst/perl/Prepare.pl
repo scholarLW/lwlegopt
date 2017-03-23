@@ -18,6 +18,8 @@ while(<IN>){
   my($chr,$pos,$ref1,$obs1)=(split '\t',$_)[0,1,3,4];
   my $left=$pos-1;
   my $right=$pos+1;
+  next if $chr=~/_/;
+  next if $chr=~/chrM/;
   open LU,"$samtools faidx $fa  $chr:$left-$right|" or die"can not use samtools" ;
   my @sam=<LU>;
   close LU;
