@@ -417,7 +417,11 @@ if(is.null(color)){
 if(isTRUE(sort)){
   h1=NULL
   h2=NULL
-  h1=rbind(h1,data.frame(Mut96type,Mut6type,apply(h[,3:ncol(h)],1,sum)/sum(apply(h[,3:ncol(h)],1,sum))))
+  if(ncol(h)==3){
+    h1=rbind(h1,data.frame(Mut96type,Mut6type,h[,c(3)]/sum(h[,c(3)])))
+  }else{	
+    h1=rbind(h1,data.frame(Mut96type,Mut6type,apply(h[,3:ncol(h)],1,sum)/sum(apply(h[,3:ncol(h)],1,sum))))
+  }
   colnames(h1)=c("M96","M6","High")
   Mut6type1=c("C>T","C>A","C>G","T>C","T>G","T>A")
   lable1=NULL
@@ -447,7 +451,11 @@ if(isTRUE(sort)){
 }else if(is.null(sort)){
   h1=NULL
   h2=NULL
-  h1=rbind(h1,data.frame(Mut96type,Mut6type,apply(h[,3:ncol(h)],1,sum)/sum(apply(h[,3:ncol(h)],1,sum))))
+  if(ncol(h)==3){
+    h1=rbind(h1,data.frame(Mut96type,Mut6type,h[,c(3)]/sum(h[,c(3)])))
+  }else{
+    h1=rbind(h1,data.frame(Mut96type,Mut6type,apply(h[,3:ncol(h)],1,sum)/sum(apply(h[,3:ncol(h)],1,sum))))
+  }
   colnames(h1)=c("M96","M6","High")
   Mut6type1=c("C>T","C>A","C>G","T>C","T>G","T>A")
   lable1=c("T_G","C_G","A_G","G_G","T_A","C_A","A_A","G_A","T_C","C_C","A_C","G_C","T_T","C_T","A_T","G_T")
@@ -467,7 +475,11 @@ if(isTRUE(sort)){
   name1=paste(name,".Nonsort",sep="")
 }else{
   h1=NULL
-  h1=rbind(h1,data.frame(Mut96type,Mut6type,apply(h[,3:ncol(h)],1,sum)/sum(apply(h[,3:ncol(h)],1,sum))))
+  if(ncol(h)==3){
+    h1=rbind(h1,data.frame(Mut96type,Mut6type,h[,c(3)]/sum(h[,c(3)])))
+  }else{
+    h1=rbind(h1,data.frame(Mut96type,Mut6type,apply(h[,3:ncol(h)],1,sum)/sum(apply(h[,3:ncol(h)],1,sum))))
+  }
   colnames(h1)=c("M96","M6","High")
   Mut6type=unique(Mut6type)
   lable=c("T_A","G_A","C_A","A_A","T_C","G_C","C_C","A_C","T_G","G_G","C_G","A_G","T_T","G_T","C_T","A_T")
@@ -478,7 +490,11 @@ for(i in Mut6type){
   tem=NULL
   ix=h$V2==i
   tem=h[ix,]
-  data_6type[i]=round(sum(apply(tem[,3:ncol(h)],1,sum)))
+  if(ncol(h)==3){
+    data_6type[i]=round(sum(tem[,c(3)]))
+  }else{  
+    data_6type[i]=round(sum(apply(tem[,3:ncol(h)],1,sum)))
+  }
 }
 z_high=h1$High*100
 lable_max=(max(z_high)+kge-max(z_high)%%kge)/kge
